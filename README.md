@@ -97,8 +97,15 @@ console.log(
 
 ---
 
-- Use recursividad, asi que definí una guarda de salida para: Cuando el número es igual o menor a la base, retorna la concatenación del cociente y el residuo de la division (En ese orden).
-- El retorno de la función debe ser el resultado de operar el cociente (hasta ser 0 o 1), concatenado a los residuos de cada operación.
+- Se define una clase Tree, que representa un árbol. Tiene su valor/peso y su conjunto de sub-árboles (suponiendo que un árbol puede tener de 1 a n sub-arboles)
+- Las funciones se implementan usando recursividad y una estrategia de dividir y conquistar
+- El calculo del peso promedio se realiza con la operación:
+  $$
+    a = cantidad.de.nodos \\
+    b = peso.del.árbol\\
+   \frac {b} {a}
+  $$
+- La altura se define sumando 1 a la altura maxima encontrada en cada sub-árbol.
 
 ```bash
 tsc prueba19.ts && node.prueba19.js
@@ -107,74 +114,110 @@ tsc prueba19.ts && node.prueba19.js
 ```typescript
 class Tree {
   value: number;
-  left: Tree | null;
-  right: Tree | null;
+  subTree: Tree[];
 
-  constructor(value: number, left: Tree | null, right: Tree | null) {
+  constructor(value: number, subTree: Tree[] = []) {
     this.value = value;
-    this.left = left;
-    this.right = right;
+    this.subTree = subTree;
+  }
+
+  notSubTree(): boolean {
+    return this.subTree.length === 0;
   }
 }
 
 const getTreeWeight = (tree: Tree): number => {
-  if (tree.left === null && tree.right === null) {
+  if (tree.notSubTree()) {
     return tree.value;
   }
 
+  let mid = Math.floor(tree.subTree.length / 2);
+
   return (
     tree.value +
-    (tree.left === null ? 0 : getTreeWeight(tree.left) +
-    (tree.right === null ? 0 : getTreeWeight(tree.right)))
+    tree.subTree
+      .slice(0, mid)
+      .reduce((acc, node) => acc + getTreeWeight(node!), 0) +
+    tree.subTree.slice(mid).reduce((acc, node) => acc + getTreeWeight(node!), 0)
   );
 };
 
 const getTreeNodesCount = (tree: Tree): number => {
-  if (tree.left === null && tree.right === null) {
+  if (tree.notSubTree()) {
     return 1;
   }
 
+  let mid = Math.floor(tree.subTree.length / 2);
+
   return (
     1 +
-    (tree.left === null ? 0 : getTreeNodesCount(tree.left)) +
-    (tree.right === null ? 0 : getTreeNodesCount(tree.right))
+    tree.subTree
+      .slice(0, mid)
+      .reduce((acc, node) => acc + getTreeNodesCount(node!), 0) +
+    tree.subTree
+      .slice(mid)
+      .reduce((acc, node) => acc + getTreeNodesCount(node!), 0)
   );
 };
 
 const getAverageWeight = (tree: Tree): number => {
-  return Number((getTreeWeight(tree) / getTreeNodesCount(tree)).toFixed(5));
+  return Number((getTreeWeight(tree) / getTreeNodesCount(tree)).toFixed(7));
 };
 
 const getTreeHeight = (tree: Tree): number => {
-  if (tree.left === null && tree.right === null) {
+  if (tree.notSubTree()) {
     return 1;
   }
+
+  let mid = Math.floor(tree.subTree.length / 2);
 
   return (
     1 +
     Math.max(
-      tree.left === null ? 0 : getTreeHeight(tree.left),
-      tree.right === null ? 0 : getTreeHeight(tree.right)
+      tree.subTree
+        .slice(0, mid)
+        .reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0),
+      tree.subTree
+        .slice(mid)
+        .reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0)
     )
   );
 };
 
-const tree_one = new Tree(4, null, null);
-const tree_two = new Tree(4, new Tree(2, null, null), new Tree(1, null, null));
+const tree_one = new Tree(4);
+const tree_two = new Tree(4, [new Tree(2), new Tree(1)]);
+const tree_three = new Tree(4, [
+  new Tree(1),
+  new Tree(2, [new Tree(3)]),
+  new Tree(5, [new Tree(1), new Tree(4)]),
+]);
 
 console.log(
   `
-  Tree One:
-    Weight: ${getTreeWeight(tree_one)},
-    Average: ${getAverageWeight(tree_one)},
-    Height: ${getTreeHeight(tree_one)}\n
-    ` +
+      Tests
+      ------
+      ` +
     `
-  Tree Two:
-    Weight: ${getTreeWeight(tree_two)},
-    Average: ${getAverageWeight(tree_two)},
-    Height: ${getTreeHeight(tree_two)}
+    Tree One:
+      Weight: ${getTreeWeight(tree_one)},
+      Average: ${getAverageWeight(tree_one)},
+      Height: ${getTreeHeight(tree_one)}
+      ` +
     `
+    Tree Two:
+      Weight: ${getTreeWeight(tree_two)},
+      Average: ${getAverageWeight(tree_two)},
+      Height: ${getTreeHeight(tree_two)}
+      ` +
+    `
+    Tree Three:
+      Weight: ${getTreeWeight(tree_three)},
+      Average: ${getAverageWeight(tree_three)},
+      Height: ${getTreeHeight(tree_three)}
+      `
 );
-
 ```
+
+## Author
+
+- [Jorge David Saenz Diaz](https://www.linkedin.com/in/jorge-david-saenz-diaz/) - [@JorgeSDiaz](https://github.com/JorgeSDiaz)
