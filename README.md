@@ -49,7 +49,7 @@ console.log(
 
 ***Implemente una función que reciba como parámetros un número X y una base K. Devuelva la representación en base K del número X***
 
-- Use recursividad, asi que definí una guarda de salida para: Cuando el número es igual o menor a la base, retorne el concatenación del cociente y el residuo de la division (En ese orden).
+- Use recursividad, asi que definí una guarda de salida para: Cuando el número es igual o menor a la base, retorna la concatenación del cociente y el residuo de la division (En ese orden).
 - El retorno de la función debe ser el resultado de operar el cociente (hasta ser 0 o 1), concatenado a los residuos de cada operación.
 
 ```bash
