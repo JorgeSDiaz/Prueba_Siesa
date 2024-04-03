@@ -15,9 +15,9 @@ Los ejercicios los desarrolle con Typescript, asi que hice uso de tsc para hacer
 
 **_Realice un algoritmo que reciba como parámetro dos números enteros y retorne la división de ambos números._**
 
-Tome a consideración el caso de cuando se divide entre 0, aunque la operación retornara Infinity, preferí hacerlo más evidente con el emoji de ♾️.
+- Tome a consideración el caso de cuando se divide entre 0, aunque la operación retornara Infinity, preferí hacerlo más evidente con el emoji de ♾️.
 
-Agregue algunos test para asegurarme de que funciona correctamente.
+- Agregue algunos test para asegurarme de que funciona correctamente.
 
 ```bash
 tsc prueba17.ts && node.prueba17.js
