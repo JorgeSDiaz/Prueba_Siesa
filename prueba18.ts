@@ -1,10 +1,13 @@
 const changeNumberBase = (number: number, baseTo: number) => {
+  // Si el número es menor o igual a la base, significa que ya no se puede dividir más, después de esta operación.
   if (number <= baseTo) {
+    // Retorna la concatenación del cociente de la división y el residuo de la división.
     return (
       Math.round(number / baseTo).toString() + (number % baseTo).toString()
     );
   }
 
+  // El residuo de la división siempre es el último dígito.
   return (
     changeNumberBase(Math.floor(number / baseTo), baseTo) +
     (number % baseTo).toString()
