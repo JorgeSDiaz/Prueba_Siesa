@@ -132,13 +132,13 @@ const getTreeWeight = (tree: Tree): number => {
   }
 
   let mid = Math.floor(tree.subTree.length / 2);
+  let left = tree.subTree.slice(0, mid);
+  let right = tree.subTree.slice(mid);
 
   return (
     tree.value +
-    tree.subTree
-      .slice(0, mid)
-      .reduce((acc, node) => acc + getTreeWeight(node!), 0) +
-    tree.subTree.slice(mid).reduce((acc, node) => acc + getTreeWeight(node!), 0)
+    left.reduce((acc, node) => acc + getTreeWeight(node!), 0) +
+    right.reduce((acc, node) => acc + getTreeWeight(node!), 0)
   );
 };
 
@@ -148,15 +148,13 @@ const getTreeNodesCount = (tree: Tree): number => {
   }
 
   let mid = Math.floor(tree.subTree.length / 2);
+  let left = tree.subTree.slice(0, mid);
+  let right = tree.subTree.slice(mid);
 
   return (
     1 +
-    tree.subTree
-      .slice(0, mid)
-      .reduce((acc, node) => acc + getTreeNodesCount(node!), 0) +
-    tree.subTree
-      .slice(mid)
-      .reduce((acc, node) => acc + getTreeNodesCount(node!), 0)
+    left.reduce((acc, node) => acc + getTreeNodesCount(node!), 0) +
+    right.reduce((acc, node) => acc + getTreeNodesCount(node!), 0)
   );
 };
 
@@ -170,16 +168,14 @@ const getTreeHeight = (tree: Tree): number => {
   }
 
   let mid = Math.floor(tree.subTree.length / 2);
+  let left = tree.subTree.slice(0, mid);
+  let right = tree.subTree.slice(mid);
 
   return (
     1 +
     Math.max(
-      tree.subTree
-        .slice(0, mid)
-        .reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0),
-      tree.subTree
-        .slice(mid)
-        .reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0)
+      left.reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0),
+      right.reduce((acc, node) => Math.max(acc, getTreeHeight(node!)), 0)
     )
   );
 };
@@ -216,6 +212,7 @@ console.log(
       Height: ${getTreeHeight(tree_three)}
       `
 );
+
 ```
 
 ## Author
