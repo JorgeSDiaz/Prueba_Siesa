@@ -20,7 +20,7 @@ Tome a consideración el caso de cuando se divide entre 0, aunque la operación 
 Agregue algunos test para asegurarme de que funciona correctamente.
 
 ```bash
-tsc prueba17.ts && node.prueba.js
+tsc prueba17.ts && node.prueba17.js
 ```
 
 ```typescript
