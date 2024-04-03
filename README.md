@@ -13,7 +13,7 @@ Los ejercicios los desarrolle con Typescript, asi que hice uso de tsc para hacer
 
 ## Ejercicio 17
 
-**_Realice un algoritmo que reciba como parámetro dos números enteros y retorne la división de ambos números._**
+***Realice un algoritmo que reciba como parámetro dos números enteros y retorne la división de ambos números.***
 
 - Tome a consideración el caso de cuando se divide entre 0, aunque la operación retornara Infinity, preferí hacerlo más evidente con el emoji de ♾️.
 
@@ -42,5 +42,42 @@ console.log(
     divide(1, 0) = ${divide(1, 0)} (Expected: ♾️)
     divide(1500, 12) = ${divide(1500, 12)} (Expected: 125)
     `
+);
+```
+
+## Ejercicio 18
+
+***Implemente una función que reciba como parámetros un número X y una base K. Devuelva la representación en base K del número X***
+
+- Use recursividad, asi que definí una guarda de salida para: Cuando el número es igual o menor a la base, retorne el concatenación del cociente y el residuo de la division (En ese orden).
+- El retorno de la función debe ser el resultado de operar el cociente (hasta ser 0 o 1), concatenado a los residuos de cada operación.
+
+```bash
+tsc prueba18.ts && node.prueba18.js
+```
+
+```typescript
+const changeNumberBase = (number: number, baseTo: number) => {
+  if (number <= baseTo) {
+    return (
+      Math.round(number / baseTo).toString() + (number % baseTo).toString()
+    );
+  }
+
+  return (
+    changeNumberBase(Math.floor(number / baseTo), baseTo) +
+    (number % baseTo).toString()
+  );
+};
+
+console.log(
+  `
+    Tests
+    -----
+    287 en base 4: ${changeNumberBase(287, 4)} (Expected: 10133)
+    10 en base 2: ${changeNumberBase(10, 2)} (Expected: 1010)
+    2 en base 2: ${changeNumberBase(2, 2)} (Expected: 10)
+    287 en base 2: ${changeNumberBase(287, 2)} (Expected: 100011100)
+ `
 );
 ```
